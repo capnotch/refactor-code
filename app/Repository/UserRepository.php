@@ -1,19 +1,19 @@
 <?php
 
-namespace DTApi\Repository;
+namespace App\Repository;
 
-use DTApi\Models\Company;
-use DTApi\Models\Department;
-use DTApi\Models\Type;
-use DTApi\Models\UsersBlacklist;
+use App\Models\Company;
+use App\Models\Department;
+use App\Models\Type;
+use App\Models\UsersBlacklist;
 use Illuminate\Support\Facades\Log;
 use Monolog\Logger;
-use DTApi\Models\User;
-use DTApi\Models\Town;
-use DTApi\Models\UserMeta;
-use DTApi\Models\UserTowns;
-use DTApi\Events\JobWasCreated;
-use DTApi\Models\UserLanguages;
+use App\User;
+use App\Models\Town;
+use App\Models\UserMeta;
+use App\Models\UserTowns;
+use App\Events\JobWasCreated;
+use App\Models\UserLanguages;
 use Monolog\Handler\StreamHandler;
 use Illuminate\Support\Facades\DB;
 use Monolog\Handler\FirePHPHandler;
