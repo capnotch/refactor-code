@@ -6,7 +6,10 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laratrust\Traits\LaratrustUserTrait;
-
+// use Laratrust\Models\LaratrustRole;
+// use Laratrust\Models\LaratrustPermission;
+// use Laratrust\Models\LaratrustTeam
+;
 class User extends Authenticatable
 {
     
@@ -18,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'user_type','name', 'company_id', 'department_id' ,'status', 'email','dob_or_orgid','phone','mobile','email_verified_at', 'password',
     ];
 
     /**
@@ -38,4 +41,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+      /**
+     * Get the usermeta record associated with the user.
+     */
+    public function usermeta()
+    {
+        return $this->hasOne('App\Models\UserMeta');
+    }
+
+    public function languages()
+    {
+        return $this->belongsToMany('App\Models\Languages', 'user_languages', 
+        'user_id', 'lang_id');
+    }
 }

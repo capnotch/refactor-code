@@ -2,10 +2,10 @@
 namespace App\Helpers;
 
 use Carbon\Carbon;
-use DTApi\Models\Job;
-use DTApi\Models\User;
-use DTApi\Models\Language;
-use DTApi\Models\UserMeta;
+use App\Models\Job;
+use App\User;
+use App\Models\Language;
+use App\Models\UserMeta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 

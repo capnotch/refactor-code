@@ -9,6 +9,7 @@ use App\Models\UsersBlacklist;
 use Illuminate\Support\Facades\Log;
 use Monolog\Logger;
 use App\User;
+use App\Role;
 use App\Models\Town;
 use App\Models\UserMeta;
 use App\Models\UserTowns;
@@ -55,12 +56,16 @@ class UserRepository extends BaseRepository
 
 
         if (!$id || $id && $request['password']) $model->password = bcrypt($request['password']);
-        $model->detachAllRoles();
+        
+         
+        $roles = Role::all();
+        $model->detachRoles($roles);
         $model->save();
+        if($request['role'] != '')
         $model->attachRole($request['role']);
         $data = array();
 
-        if ($request['role'] == env('CUSTOMER_ROLE_ID')) {
+        if ($request['role'] == 'client') {
 
             if($request['consumer_type'] == 'paid')
             {
@@ -129,7 +134,7 @@ class UserRepository extends BaseRepository
             }
 
 
-        } else if ($request['role'] == env('TRANSLATOR_ROLE_ID')) {
+        } else if ($request['role'] == 'translator') {
 
             $user_meta = UserMeta::firstOrCreate(['user_id' => $model->id]);
 
@@ -156,21 +161,25 @@ class UserRepository extends BaseRepository
             $data['translator_level'] = $request['translator_level'];
 
             $langidUpdated = [];
+           
             if ($request['user_language']) {
+                 
                 foreach ($request['user_language'] as $langId) {
                     $userLang = new UserLanguages();
                     $already_exit = $userLang::langExist($model->id, $langId);
+                    
                     if ($already_exit == 0) {
                         $userLang->user_id = $model->id;
                         $userLang->lang_id = $langId;
                         $userLang->save();
+                        
                     }
                     $langidUpdated[] = $langId;
 
                 }
-                if ($langidUpdated) {
-                    $userLang::deleteLang($model->id, $langidUpdated);
-                }
+                // if ($langidUpdated) {
+                //     $userLang::deleteLang($model->id, $langidUpdated);
+                // }
             }
 
         }
@@ -198,16 +207,19 @@ class UserRepository extends BaseRepository
 
             }
         }
-
+        
         if ($request['status'] == '1') {
             if ($model->status != '1') {
-                $this->enable($model->id);
+                $model = $this->enable($model->id);
             }
         } else {
             if ($model->status != '0') {
-                $this->disable($model->id);
+                $model = $this->disable($model->id);
             }
         }
+        
+       
+       
         return $model ? $model : false;
     }
 
@@ -216,6 +228,7 @@ class UserRepository extends BaseRepository
         $user = User::findOrFail($id);
         $user->status = '1';
         $user->save();
+        return $user;
 
     }
 
@@ -224,6 +237,7 @@ class UserRepository extends BaseRepository
         $user = User::findOrFail($id);
         $user->status = '0';
         $user->save();
+        return $user;
 
     }
 

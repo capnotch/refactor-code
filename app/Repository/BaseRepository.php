@@ -1,10 +1,10 @@
 <?php
 
-namespace DTApi\Repository;
+namespace App\Repository;
 
 use Validator;
 use Illuminate\Database\Eloquent\Model;
-use DTApi\Exceptions\ValidationException;
+use App\Exceptions\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class BaseRepository

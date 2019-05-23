@@ -16,35 +16,34 @@ class CreateUserMetasTable extends Migration
         Schema::create('user_metas', function (Blueprint $table) {
             $table->bigIncrements('id');
             
-            $table->string('consumer_type');
-            $table->string('username');
-            $table->string('post_code');            
-            $table->string('address');            
-            $table->string('city');            
-            $table->string('town');            
-            $table->string('country');            
-            $table->string('reference');            
-            $table->string('additional_info');            
-            $table->integer('fee');            
-            $table->timestamp('time_to_charge');            
-            $table->timestamp('time_to_pay');            
-            $table->string('customer_id');            
-            $table->string('charge_km');            
-            $table->string('maximum_km');            
-            $table->string('translator_type');            
-            $table->string('worked_for');            
-            $table->integer('organization_number');            
-            $table->string('gender');            
-            $table->string('translator_level');            
-            $table->string('post_code');            
-            $table->string('address');            
-            $table->string('address_2');            
-            $table->string('town');            
+            $table->string('consumer_type')->default('');
+            $table->string('username')->default('');
+            $table->string('customer_type')->default('');
+            $table->string('cost_place')->default('');
+            $table->string('charge_ob')->default('');
+            $table->string('post_code')->default('');           
+            $table->string('address')->default('');           
+            $table->string('address_2')->default('');        
+            $table->string('city')->default('');           
+            $table->string('town')->default('');            
+            $table->string('country')->default('');          
+            $table->string('reference')->default('');           
+            $table->string('additional_info')->default('');          
+            $table->string('fee')->default('');            
+            $table->string('time_to_charge')->default('');            
+            $table->string('time_to_pay')->default('');           
+            $table->string('customer_id')->default('');           
+            $table->string('charge_km')->default('');            
+            $table->string('maximum_km')->default('');            
+            $table->string('translator_type')->default('');            
+            $table->string('worked_for')->default('');           
+            $table->string('organization_number')->default('');            
+            $table->string('gender')->default('');            
+            $table->string('translator_level')->default('');           
             
-            $table->integer('user_id');
-            $table->integer('worked_for');
+            $table->string('user_id')->default('');
 
-            $table->integer('company_id');
+            $table->string('company_id')->default('');
 
             $table->timestamps();
         });
